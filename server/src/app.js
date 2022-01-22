@@ -1,8 +1,12 @@
 const express = require('express')
+const bodyParser = require("body-parser");
 
 const port = process.env.PORT || 8088
 const app = express()
-const appTwo = express()
+
+//Here we are configuring express to use body-parser as middle-ware.
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // Route Middlewares
 const apiRoute = require('../routers/index')
@@ -17,10 +21,10 @@ app.get('/personal', function(req, res, next){
     
 })
 
-app.get('/favourite', function(req, res, next){
-    console.log("This is http://localhost:8088/favourite");
+app.post('/favourite', function(req, res, next){
     res.send({
-        "path": "This is http://localhost:8088" + req.path
+        "path": "This is http://localhost:8088" + req.path,
+        "name": req.body.name
     })
 })
 
